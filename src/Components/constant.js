@@ -9,19 +9,14 @@ const gammaList = (dataClassWise) => {
   return dataClassWise?.map((item) => (item.Ash * item.Hue) / item.Magnesium);
 };
 
-const compareNumbers = (a, b) => {
-  // Sorting the data numbers wise
-  return a - b;
-};
-
 const mode = (wineData, alcohol, table) => {
   // mode = highest frequency
   const dataClassWise = classWise(wineData, alcohol);
   const list = table === "Gamma" ? gammaList(dataClassWise) : dataClassWise;
   const sortedData =
     table === "Gamma"
-      ? list?.sort(compareNumbers)
-      : list?.map((item) => item.Flavanoids).sort(compareNumbers);
+      ? list?.sort()
+      : list?.map((item) => item.Flavanoids).sort();
 
   let maxCount = 0;
   let maxValue = [];
@@ -61,8 +56,8 @@ const median = (wineData, alcohol, table) => {
 
   const sortedData =
     table === "Gamma"
-      ? list?.sort(compareNumbers)
-      : list?.map((item) => item.Flavanoids).sort(compareNumbers);
+      ? list?.sort()
+      : list?.map((item) => item.Flavanoids).sort();
 
   if (sortedData.length % 2 === 0) {
     //  Median = [(n/2 + 1)th term + (n/2)th term]/2 ; if n is even
@@ -90,7 +85,8 @@ const mean = (wineData, alcohol, table) => {
   const dataClassWise = classWise(wineData, alcohol);
   const list = table === "Gamma" ? gammaList(dataClassWise) : dataClassWise;
   const total = list?.reduce(
-    (sum, item) => parseInt(sum) + (table === "Gamma" ? item : item.Flavanoids),
+    (sum, item) =>
+      parseFloat(sum) + (table === "Gamma" ? item : item.Flavanoids),
     0
   );
 
@@ -100,4 +96,4 @@ const mean = (wineData, alcohol, table) => {
 //   const meanFlavanoid = mean(wineData, 1);
 //   console.log("meanFlavanoid", meanFlavanoid);
 
-export { classWise, compareNumbers, mode, median, mean };
+export { classWise, mode, median, mean };
